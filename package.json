@@ -1,6 +1,6 @@
 {
   "name": "react-simple-knob",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple knob element for react",
   "main": "dist/react-simple-knob.cjs.js",
   "unpkg": "dist/react-simple-knob.umd.js",

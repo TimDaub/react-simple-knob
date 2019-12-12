@@ -75,6 +75,10 @@ The following things could be improved:
 
 ## Changelog
 
+### 0.0.6
+
+- Bugfix: Fix Arc background
+
 ### 0.0.5
 
 - Make `fontSize` configurable using `style` props
