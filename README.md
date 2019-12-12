@@ -73,6 +73,10 @@ The following things could be improved:
 
 ## Changelog
 
+### 0.0.3
+
+- Allow very limited styling
+
 ### 0.0.2
 
 - Bugfix: Fix `defaultPercentage` prop
