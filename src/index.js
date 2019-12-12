@@ -4,19 +4,35 @@ import PropTypes from "prop-types";
 
 import Arc from "./Arc";
 
+const viewBox = {
+  height: 150,
+  width: 250
+};
+
+const angleRange = 270;
+const angleOffset = 180;
+
 class Knob extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      drag: false,
+      angle: props.defaultPercentage / angleRange,
+      text: {
+        x: 0,
+        y: 0
+      },
+      svgRatio: 1,
+      nameWidth: 20
+    };
 
     this.handleDown = this.handleDown.bind(this);
     this.handleMove = this.handleMove.bind(this);
     this.handleUp = this.handleUp.bind(this);
     this.calcAngle = this.calcAngle.bind(this);
-
-    this.state = {
-      drag: false,
-      angle: props.defaultPercentage / props.angleRange
-    };
+    this.calcSvgRatio = this.calcSvgRatio.bind(this);
+    this.onWindowResize = this.onWindowResize.bind(this);
   }
 
   handleDown({ pageY }) {
@@ -32,15 +48,16 @@ class Knob extends React.Component {
   handleMove({ pageY }) {
     if (!this.state.drag) return;
 
-    const { angleRange } = this.props;
+    const { transform, onChange, mouseSpeed } = this.props;
     let { angle, prevPageY } = this.state;
     if (!prevPageY) {
       this.setState({ prevPageY: pageY });
       return;
     }
-    const delta = prevPageY - pageY;
+    const delta = (prevPageY - pageY) * mouseSpeed;
 
     angle = this.calcAngle(angle, delta, angleRange);
+    onChange(transform(angle / angleRange));
     this.setState({ angle, prevPageY: pageY });
   }
 
@@ -54,42 +71,122 @@ class Knob extends React.Component {
     return angle;
   }
 
+  componentDidMount() {
+    window.addEventListener("resize", this.onWindowResize);
+    window.addEventListener("mousemove", this.handleMove);
+    window.addEventListener("mouseup", this.handleUp);
+    // NOTE: We call this initially, to set the width and height values.
+    this.onWindowResize();
+  }
+
+  calcSvgRatio() {
+    const { width } = this.refs.box.getBoundingClientRect();
+
+    // NOTE: As the svg preserves it's aspect ratio, we have to calculate only
+    // one value that accounts for both width and height ratios.
+    return new Promise(resolve => {
+      this.setState({ svgRatio: width / viewBox.width }, resolve);
+    });
+  }
+
+  async onWindowResize() {
+    await this.calcSvgRatio();
+    this.fitText();
+  }
+
+  fitText() {
+    const { svgRatio } = this.state;
+    const rect = this.refs.name.getBoundingClientRect();
+    this.setState({ nameWidth: rect.width / svgRatio });
+  }
+
   render() {
-    const { style, angleRange, angleOffset } = this.props;
-    const { angle } = this.state;
+    const { transform, step, unit, name, style } = this.props;
+    const { svgRatio, angle, nameWidth } = this.state;
+    const percentage = angle / angleRange;
+    const { width, height } = viewBox;
+    const outerCircle = {
+      arcWidth: 10,
+      radius: 40
+    };
+    const font = {
+      size: 40,
+      marginBottom: 5
+    };
 
     return (
       <svg
+        ref="box"
         onMouseDown={this.handleDown}
-        onMouseMove={this.handleMove}
-        onMouseUp={this.handleUp}
         style={style}
-        viewBox="0 0 100, 100"
+        viewBox={`0 0 ${width} ${height}`}
       >
-        <circle fill="red" r="40" cx="50" cy="50" />
+        <text
+          ref="name"
+          style={{
+            pointerEvents: "none",
+            cursor: "pointer",
+            userSelect: "none"
+          }}
+          x="0"
+          y={font.size}
+          fontSize={font.size}
+        >
+          {name}
+        </text>
+        <circle
+          fill="red"
+          r={25}
+          cx={outerCircle.arcWidth + outerCircle.radius}
+          cy={50 + font.size + font.marginBottom}
+        />
         <Arc
-          percentage={angle / angleRange}
+          percentage={percentage}
           angleOffset={angleOffset}
           angleRange={angleRange}
-          arcWidth={2}
-          radius={48}
+          arcWidth={outerCircle.arcWidth}
+          radius={outerCircle.radius}
           center={50}
           background="transparent"
           color="red"
+          style={{
+            transform: `translateY(${font.size + font.marginBottom}px)`
+          }}
         />
+        <text
+          ref="value"
+          style={{
+            pointerEvents: "none",
+            cursor: "pointer",
+            userSelect: "none"
+          }}
+          x={80}
+          y={130 + font.marginBottom}
+          fontSize={40}
+        >
+          {`${transform(percentage)} ${unit}`}
+        </text>
       </svg>
     );
   }
 }
 
 Knob.propTypes = {
-  defaultPercentage: PropTypes.number
+  defaultPercentage: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  transform: PropTypes.func,
+  mouseSpeed: PropTypes.number,
+  unit: PropTypes.string,
+  name: PropTypes.string,
+  style: PropTypes.object
 };
 
 Knob.defaultProps = {
   defaultPercentage: 0,
-  angleOffset: 0,
-  angleRange: 360
+  transform: p => p,
+  mouseSpeed: 1,
+  unit: "",
+  name: ""
 };
 
 export default Knob;

@@ -37,14 +37,14 @@ const calcPath = ({
   },${p1.y}`;
 };
 
-export default ({ color, background, ...props }) => (
+export default ({ color, background, style, ...props }) => (
   <g>
     {background && (
       <path
         d={calcPath({ ...props, percentage: 1 })}
-        style={{ stroke: background }}
+        style={{ stroke: background, ...style }}
       />
     )}
-    <path d={calcPath(props)} style={{ fill: color }} />
+    <path d={calcPath(props)} style={{ fill: color, ...style }} />
   </g>
 );
