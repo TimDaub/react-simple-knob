@@ -1,5 +1,7 @@
 # react-simple-knob
 
+[![npm version](https://badge.fury.io/js/react-simple-knob.svg)](https://badge.fury.io/js/react-simple-knob)
+
 > A simple knob element for react.
 
 <a href="https://github.com/TimDaub/react-simple-knob"><img width="600"
