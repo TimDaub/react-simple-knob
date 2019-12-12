@@ -68,6 +68,10 @@ The following things could be improved:
 
 ## Changelog
 
+### 0.0.2
+
+- Bugfix: Fix `defaultPercentage` prop
+
 ### 0.0.1
 
 - Initial release
