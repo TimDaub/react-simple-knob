@@ -19,7 +19,7 @@
     "knob",
     "element"
   ],
-  "author": "= <=> (http://hondrt.de/)",
+  "author": "Tim Daubenschütz <tim.daubenschuetz@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TimDaub/react-simple-knob/issues"

@@ -124,6 +124,7 @@ class Knob extends React.Component {
         <text
           ref="name"
           style={{
+            fontFamily: style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"
@@ -156,6 +157,7 @@ class Knob extends React.Component {
         <text
           ref="value"
           style={{
+            fontFamily: style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"

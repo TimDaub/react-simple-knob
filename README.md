@@ -3,7 +3,7 @@
 > A simple knob element for react.
 
 <a href="https://github.com/TimDaub/react-simple-knob"><img width="600"
-src="https://github.com/TimDaub/react-simple-knob/raw/master/assets/example.gif" alt="react-simple-knob screenshot" /></a>
+src="https://github.com/TimDaub/react-simple-knob/raw/master/assets/examplev2.gif" alt="react-simple-knob screenshot" /></a>
 
 
 ## Installing
@@ -33,17 +33,17 @@ function App() {
   const style = {
 	  margin: "20%",
 		height: "100px",
+    fontFamily: "Arial",
   };
 
   return (
 	  <Knob
-		  name="Volume"
-		  unit="dB"
-		  angleRange={270}
-		  angleOffset={180}
-		  defaultPercentage={0.7}
-		  onChange={console.log}
-		  transform={p => parseInt(p * 50, 10) - 50}
+      name="Volume"
+      unit="dB"
+      defaultPercentage={0.7}
+      onChange={console.log}
+      mouseSpeed={5}
+      transform={p => parseInt(p * 50, 10) - 50}
 		  style={style} />
   );
 }
