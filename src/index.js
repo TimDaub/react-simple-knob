@@ -18,7 +18,7 @@ class Knob extends React.Component {
 
     this.state = {
       drag: false,
-      angle: props.defaultPercentage / angleRange,
+      angle: props.defaultPercentage * angleRange,
       text: {
         x: 0,
         y: 0
