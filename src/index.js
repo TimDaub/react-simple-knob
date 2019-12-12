@@ -24,7 +24,8 @@ class Knob extends React.Component {
         y: 0
       },
       svgRatio: 1,
-      nameWidth: 20
+      nameWidth: 20,
+      lastVal: null
     };
 
     this.handleDown = this.handleDown.bind(this);
@@ -101,7 +102,7 @@ class Knob extends React.Component {
   }
 
   render() {
-    const { transform, step, unit, name, style } = this.props;
+    const { bg, fg, transform, step, unit, name, style } = this.props;
     const { svgRatio, angle, nameWidth } = this.state;
     const percentage = angle / angleRange;
     const { width, height } = viewBox;
@@ -124,6 +125,7 @@ class Knob extends React.Component {
         <text
           ref="name"
           style={{
+            fill: style.color,
             fontFamily: style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
@@ -136,7 +138,7 @@ class Knob extends React.Component {
           {name}
         </text>
         <circle
-          fill="red"
+          fill={bg}
           r={25}
           cx={outerCircle.arcWidth + outerCircle.radius}
           cy={50 + font.size + font.marginBottom}
@@ -148,8 +150,8 @@ class Knob extends React.Component {
           arcWidth={outerCircle.arcWidth}
           radius={outerCircle.radius}
           center={50}
-          background="transparent"
-          color="red"
+          background={bg}
+          color={fg}
           style={{
             transform: `translateY(${font.size + font.marginBottom}px)`
           }}
@@ -157,6 +159,7 @@ class Knob extends React.Component {
         <text
           ref="value"
           style={{
+            fill: style.color,
             fontFamily: style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
@@ -180,7 +183,9 @@ Knob.propTypes = {
   mouseSpeed: PropTypes.number,
   unit: PropTypes.string,
   name: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  bg: PropTypes.string,
+  fg: PropTypes.string
 };
 
 Knob.defaultProps = {
@@ -188,7 +193,9 @@ Knob.defaultProps = {
   transform: p => p,
   mouseSpeed: 1,
   unit: "",
-  name: ""
+  name: "",
+  bg: "black",
+  fg: "white",
 };
 
 export default Knob;

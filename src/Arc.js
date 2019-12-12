@@ -42,9 +42,15 @@ export default ({ color, background, style, ...props }) => (
     {background && (
       <path
         d={calcPath({ ...props, percentage: 1 })}
-        style={{ stroke: background, ...style }}
+        style={{
+          stroke: background,
+          transform: style.transform
+        }}
       />
     )}
-    <path d={calcPath(props)} style={{ fill: color, ...style }} />
+    <path
+      d={calcPath(props)}
+      style={{ fill: color, transform: style.transform }}
+    />
   </g>
 );

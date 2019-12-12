@@ -34,6 +34,7 @@ function App() {
     margin: "20%",
     height: "100px",
     fontFamily: "Arial",
+    color: "white" // Sets font color of value and knob name
   };
 
   return (
@@ -42,12 +43,16 @@ function App() {
       unit="dB"
       defaultPercentage={0.7}
       onChange={console.log}
+      bg="black"
+      fg="white"
       mouseSpeed={5}
       transform={p => parseInt(p * 50, 10) - 50}
       style={style} />
   );
 }
 ```
+
+
 ## Contributing
 
 To try the component:
@@ -64,7 +69,7 @@ Any help is very much appreciated. I'll try to merge your PRs as soon as I can!
 The following things could be improved:
 
 - [ ] Component doesn't scale automatically based on `name` and `unit` props
-- [ ] No custom styling possible
+- [ ] Only very limited styling possible
 
 ## Changelog
 
