@@ -43,7 +43,7 @@ export default ({ color, background, style, ...props }) => (
       <path
         d={calcPath({ ...props, percentage: 1 })}
         style={{
-          stroke: background,
+          fill: background,
           transform: style.transform
         }}
       />
