@@ -75,6 +75,10 @@ The following things could be improved:
 
 ## Changelog
 
+### 0.0.4
+
+- Bugfix: Make style options (`color` and `fontFamily`) optional
+
 ### 0.0.3
 
 - Allow very limited styling
