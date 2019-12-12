@@ -31,20 +31,20 @@ and then use it:
 ```js
 function App() {
   const style = {
-	  margin: "20%",
-		height: "100px",
+    margin: "20%",
+    height: "100px",
     fontFamily: "Arial",
   };
 
   return (
-	  <Knob
+    <Knob
       name="Volume"
       unit="dB"
       defaultPercentage={0.7}
       onChange={console.log}
       mouseSpeed={5}
       transform={p => parseInt(p * 50, 10) - 50}
-		  style={style} />
+      style={style} />
   );
 }
 ```
