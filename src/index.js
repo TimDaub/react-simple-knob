@@ -111,8 +111,9 @@ class Knob extends React.Component {
       radius: 40
     };
     const font = {
-      size: 40,
-      marginBottom: 5
+      marginBottom: 5,
+      size: (style && style.fontSize) || 40,
+      family: (style && style.fontFamily) || "Arial"
     };
 
     return (
@@ -126,7 +127,7 @@ class Knob extends React.Component {
           ref="name"
           style={{
             fill: style && style.color,
-            fontFamily: style && style.fontFamily || "Arial",
+            fontFamily: font.family,
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"
@@ -160,14 +161,14 @@ class Knob extends React.Component {
           ref="value"
           style={{
             fill: style && style.color,
-            fontFamily: style && style.fontFamily || "Arial",
+            fontFamily: (style && style.fontFamily) || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"
           }}
           x={80}
-          y={130 + font.marginBottom}
-          fontSize={40}
+          y={outerCircle.arcWidth + 2 * outerCircle.radius + font.size}
+          fontSize={font.size}
         >
           {`${transform(percentage)} ${unit}`}
         </text>
@@ -195,7 +196,7 @@ Knob.defaultProps = {
   unit: "",
   name: "",
   bg: "black",
-  fg: "white",
+  fg: "white"
 };
 
 export default Knob;
