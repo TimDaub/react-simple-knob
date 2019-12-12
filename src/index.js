@@ -125,8 +125,8 @@ class Knob extends React.Component {
         <text
           ref="name"
           style={{
-            fill: style.color,
-            fontFamily: style.fontFamily || "Arial",
+            fill: style && style.color,
+            fontFamily: style && style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"
@@ -159,8 +159,8 @@ class Knob extends React.Component {
         <text
           ref="value"
           style={{
-            fill: style.color,
-            fontFamily: style.fontFamily || "Arial",
+            fill: style && style.color,
+            fontFamily: style && style.fontFamily || "Arial",
             pointerEvents: "none",
             cursor: "pointer",
             userSelect: "none"
